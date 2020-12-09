@@ -8,28 +8,26 @@ public class DiagonalSort {
 		int i=0, j=0, k=0;
 		
 		System.out.println("Enter the number of rows");
-		BufferedReader rowSize = new BufferedReader(new InputStreamReader(System.in));
-		int row = Integer.parseInt(rowSize.readLine()); 
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int row = Integer.parseInt(br.readLine()); 
 		
 		System.out.println("Enter the number of columns");
-		BufferedReader colSize = new BufferedReader(new InputStreamReader(System.in));
-		int col = Integer.parseInt(colSize.readLine()); 
+		int col = Integer.parseInt(br.readLine()); 
 		
 		int mat[][] = new int[row][col];
 		System.out.println("Enter matrix");
-		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+	
 		for(i=0; i<row; i++) {
 			for(j=0; j<col; j++) {
-				mat[i][j] = Integer.parseInt(input.readLine());
+				mat[i][j] = Integer.parseInt(br.readLine());
 			}
 		}
 		
+		//To sort upper elements
 		for(j=0; j<col;j++) {
 			i=0;
 			k=j;
 			while(i<row && k<col) {
-				System.out.println(i);
-				System.out.println(k);
 				sortedDiagonal.add(i, mat[i][k]);
 				i=i+1;
 				k=k+1;
@@ -39,38 +37,39 @@ public class DiagonalSort {
 			Collections.sort(sortedDiagonal);
 			while(i<row && k<col) {
 				mat[i][k] = sortedDiagonal.get(i);
-				//sortedDiagonal.remove(i);
 				i++;
 				k++;
 			}
+			sortedDiagonal.clear();
 		}
 		
-//		for(i=1; i<row; i++) {
-//			j=0;
-//			k=i;
-//			while((i-j)==1) {
-//				sortedDiagonal.add(j, mat[i][k]);
-//				i++;
-//				k++;
-//			}
-//			j=0;
-//			k=i;
-//			Collections.sort(sortedDiagonal);
-//			while(i<row) {
-//				mat[i][k] = sortedDiagonal.get(j);
-//				i++;
-//				k++;
-//			}
-//		}
+		//To sort lower elements
+		j=0;
+		for(i=1;i<row;i++) {
+			k=i;
+			j=0;
+			while(k<row) {
+				sortedDiagonal.add(j, mat[k][j]);
+				k=k+1;
+				j=j+1;
+			}
+			k=i;
+			j=0;
+			Collections.sort(sortedDiagonal);
+			while(k<row) {
+				mat[k][j] = sortedDiagonal.get(j);
+				k=k+1;
+				j=j+1;
+			}
+			sortedDiagonal.clear();
+		}
 		
+		System.out.println("Diagonally Sorted Matrix is: ");
 		for (i=0; i<row; i++) {
 			for(j=0; j<col; j++) {
 				System.out.print(mat[i][j]+" ");
 			}
 			System.out.println();
-		}
-		
-		System.out.println(sortedDiagonal);
-		
+		}		
 	}
 }
